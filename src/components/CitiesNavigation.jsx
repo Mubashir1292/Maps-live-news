@@ -1,0 +1,75 @@
+import React from 'react'
+
+function CitiesNavigation() {
+    const cities=[
+        {
+            label:'Dubai',
+            path:{
+                lat:25.2048,
+                lon:55.2708
+            },
+        },
+        {
+            label:'Abu Dhabi',
+            path:{
+                lat:24.4539,
+                lon:54.3773
+            },
+        },
+        {
+            label:'Sharjah',
+            path:{
+                lat:25.3562,
+                lon:55.4272
+            }
+        },
+        {
+            label:'Ajman',
+            path:{
+                lat:25.4052,
+                lon:55.5136
+            }
+        },
+        {
+            label:'Umm Al Quwain',
+            path:{
+                lat:25.5508,
+                lon:55.5524
+            },
+        },
+        {
+            label:'Ras Al Khaimah',
+            path:{
+                lat:25.8007,
+                lon:55.9762,
+            },
+        },
+        {
+            label:'Fujairah',
+            path:{
+                lat:25.1221,
+                lon:56.3345
+            },
+        },
+    ]
+  return (
+    <div className="w-full bg-[#954535] h-12 flex items-center justify-center">
+        {/* Cities  */}
+        <div className="flex w-9/12  sm:w-full md:w-10/12 items-center xl:space-x-10 lg:space-x-8 md:space-x-6 sm:space-x-5 space-x-0 pl-1 box-border">
+                {cities && cities.map((city,index)=>(
+                    <p className="text-white cursor-pointer text-[10px] sm:text-sm md:text-sm lg:text-sm xl:text-lg whitespace-nowrap overflow-hidden " key={index}>{city.label}</p>
+                ))}
+        </div>
+        {/* current Date */}    
+        <div className="w-3/12  flex justify-end pr-5 items-center">
+        <span className="text-[10px] sm:text-sm text-white cursor-pointer ">{new Date().toLocaleDateString('en-GB',{
+            day:'2-digit',
+            month:'long',
+            year:'numeric'
+        })}</span>
+        </div>
+    </div>
+  )
+}
+
+export default CitiesNavigation
