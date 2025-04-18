@@ -3,12 +3,14 @@ import { RiSearch2Fill } from "react-icons/ri";
 import { BiSolidMessageSquareDetail } from "react-icons/bi";
 import { IoPerson } from "react-icons/io5";
 import { FiMenu, FiX } from "react-icons/fi";
+import NewsFilters from "./NewsFilters";
 
 function Header() {
   const[isShowMenu,setIsShowMenu]=React.useState(false);
   return (
     <React.Fragment>
-    <div className="w-full flex justify-between sm:justify-around  items-center border pt-6 pl-12 pb-5">
+      <div className="flex flex-col">
+    <div className="w-full flex justify-between sm:justify-around  items-center border pt-6 pl-12 border-none">
       <div className="w-6/12 text-lg">
         <p className="font-bold text-xl sm:text-3xl  font-sans">
           MapCast
@@ -50,6 +52,7 @@ function Header() {
         </button>
       </div>
       {/* Hamburger Menu  */}
+
     </div>
       <div 
       className={`w-full flex items-center justify-end  sm:hidden overflow-hidden sm:flex-row transition-all ease-in-out duration-300 m-0
@@ -81,10 +84,11 @@ function Header() {
               <span className="text-[8px]">Account</span>
             </div>
           </div>
+
         </div>
      </div>
-        
-
+     <NewsFilters/>
+     </div>
     </React.Fragment>
   );
 }

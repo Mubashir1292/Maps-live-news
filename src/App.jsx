@@ -1,5 +1,6 @@
 import CitiesNavigation from "./components/CitiesNavigation";
 import Header from "./components/Header";
+import NewsFilters from "./components/NewsFilters";
 import AllNews from "./pages/AllNews";
 import MapWithMarkers from "./pages/MainMap";
 

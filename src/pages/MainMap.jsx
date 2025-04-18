@@ -1,12 +1,13 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import someOneJumped from '../assets/images/someoneJumped.webp';
 import { setAllNews,setCurrentNews } from '../store/newsSlice';
 import { useDispatch,useSelector} from 'react-redux';
 function MapWithMarkers(){
     const dispatch=useDispatch();
-    const[City,setCurrentCity] = React.useState();
+    const currentCity=useSelector(state=>state.cities.currentCity);
+    const[center,setCenter] = React.useState([25.2048, 55.2708]);
     const[news,setNews]=React.useState([
         {
             id:1,
@@ -22,21 +23,15 @@ function MapWithMarkers(){
               "Dubai","Main City","Bad News"
             ]
         },
-    ])
+    ]);
     React.useEffect(()=>{
       dispatch(setAllNews(news));
-      const currentCity=useSelector(state=>state.cities.currentCity);
-      if(currentCity){
-        setCurrentCity(currentCity);
-      }else{
-        setCurrentCity({
-          label:'randomLocation',
-          path:{
-            lat:25.2048,lng:55.2708
-          }
-        })
-      }
     },[]);
+    React.useEffect(()=>{
+      if(currentCity && currentCity.path){
+        setCenter([currentCity.path.lat,currentCity.path.lng]);
+      }
+    },[currentCity]);
     const switchingMarker=(marker)=>{
         const filteredNews = news.filter((n)=>n.id===marker);
         setCurrentNews(filteredNews);
@@ -44,16 +39,17 @@ function MapWithMarkers(){
     }
     return (
     <MapContainer 
-      center={City.path} 
+      center={center} 
       zoom={13} 
       style={{width:'100%',height:'100%',position:'relative',zIndex: 10,}}
+      key={JSON.stringify(center)}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
     <Marker 
-     position={{lat:25.2048,lng:55.2708}}
+     position={center}
         eventHandlers={{
             click:()=>switchingMarker(1)
         }}

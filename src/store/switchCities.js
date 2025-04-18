@@ -5,7 +5,7 @@ const initialState={
             label:'Dubai',
             path:{
                 lat:25.2048,
-                lon:55.2708
+                lng:55.2708
             },
     },
 }
