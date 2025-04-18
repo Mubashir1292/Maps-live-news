@@ -11,7 +11,7 @@ function Header() {
     <div className="w-full flex justify-between sm:justify-around  items-center border pt-6 pl-12 pb-5">
       <div className="w-6/12 text-lg">
         <p className="font-bold text-xl sm:text-3xl  font-sans">
-          Saif <span className="font-normal">Website</span>
+          MapCast
         </p>
       </div>
       {/* Search Input and other */}
