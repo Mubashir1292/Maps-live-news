@@ -3,9 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import someOneJumped from '../assets/images/someoneJumped.webp';
 import { setAllNews,setCurrentNews } from '../store/newsSlice';
-import { useDispatch} from 'react-redux';
+import { useDispatch,useSelector} from 'react-redux';
 function MapWithMarkers(){
     const dispatch=useDispatch();
+    const[City,setCurrentCity] = React.useState();
     const[news,setNews]=React.useState([
         {
             id:1,
@@ -24,6 +25,17 @@ function MapWithMarkers(){
     ])
     React.useEffect(()=>{
       dispatch(setAllNews(news));
+      const currentCity=useSelector(state=>state.cities.currentCity);
+      if(currentCity){
+        setCurrentCity(currentCity);
+      }else{
+        setCurrentCity({
+          label:'randomLocation',
+          path:{
+            lat:25.2048,lng:55.2708
+          }
+        })
+      }
     },[]);
     const switchingMarker=(marker)=>{
         const filteredNews = news.filter((n)=>n.id===marker);
@@ -32,7 +44,7 @@ function MapWithMarkers(){
     }
     return (
     <MapContainer 
-      center={{lat:25.2048,lng:55.2708}} 
+      center={City.path} 
       zoom={13} 
       style={{width:'100%',height:'100%',position:'relative',zIndex: 10,}}
     >

@@ -1,7 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 const initialState={
     cities:[],
-    currentCity:null,
+    currentCity:{
+            label:'Dubai',
+            path:{
+                lat:25.2048,
+                lon:55.2708
+            },
+    },
 }
 const switchingCities=createSlice({
     name:'cities',
@@ -20,3 +26,5 @@ const switchingCities=createSlice({
         }
     }
 })
+export default switchingCities.reducer;
+export const {setAllCities,getCurrentCity,setCurrentCity}=switchingCities.actions;
