@@ -7,6 +7,7 @@ const initialState={
                 lat:25.2048,
                 lng:55.2708
             },
+            zoomed:false,
     },
 }
 const switchingCities=createSlice({
@@ -17,6 +18,7 @@ const switchingCities=createSlice({
             state.cities=action.payload;
         },
         setCurrentCity:(state,action)=>{
+            console.log(action.payload)
             state.currentCity=action.payload;
         },
         getCurrentCity:(state,action)=>{

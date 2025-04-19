@@ -1,51 +1,15 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCurrentNewsFilter} from '../store/newsFilterSlice';
+import {setFilteredNews} from '../store/newsSlice'
 const NewsFilters = () => {
+    const dispatch=useDispatch();
     const[active,setActive]=React.useState(1);
-    const filters=[
-        {
-            id:1,
-            value:'All'
-        },
-        {
-            id: 2,
-            value: 'Local News'
-        },
-        {
-            id: 3,
-            value: 'Sports'
-        },
-        {
-            id: 4,
-            value: 'Weather'
-        },
-        {
-            id: 5,
-            value: 'Education'
-        },
-        {
-            id: 6,
-            value: 'Politics'
-        },
-        {
-            id: 7,
-            value: 'Food and Drinks'
-        },
-        {
-            id: 8,
-            value: 'Entertainment'
-        },
-        {
-            id: 9,
-            value: 'Technology'
-        },
-        {
-            id: 10,
-            value: 'Business and Economics'
-        }
-    ]
+    const filters=useSelector((state)=>state.newsFilter.newsFilters);
     const handleFilterClicked=(item)=>{
         setActive(item.id)
-        console.log(item);
+        dispatch(setCurrentNewsFilter(item));
+        dispatch(setFilteredNews(item));
     }
     return (
         <div className="flex justify-center items-center space-x-2 p-3 overflow-x-auto">

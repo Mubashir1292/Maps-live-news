@@ -1,7 +1,5 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
-import CampaignIcon from '@mui/icons-material/Campaign';
-import SchoolIcon from '@mui/icons-material/School';
 import DataModel from '../components/DataModel';
 import  suicide from '../assets/images/suicide.svg'
 import speaker from '../assets/images/speaker.svg';
@@ -32,6 +30,7 @@ export function getTimeDifference(isoDateString) {
     
     return 'just now';
   };
+
 export function renderKnownImage(newsType){
     return (
         <img className="w-10 h-10 rounded-full" src={newsType === "suicide" ?suicide : speaker } alt={newsType} />
@@ -39,22 +38,21 @@ export function renderKnownImage(newsType){
 }
 function AllNews() {
     const [isDataModalOpen,setIsDataModalOpen]=React.useState(false);
-    const[currentNews,setCurrentNews]=React.useState(null);
+    const [currentNews,setCurrentNews]=React.useState(null);
     const handleClose=()=>{
         setIsDataModalOpen(false);
     }
-    const {allNews}=useSelector((state)=>state.news);
+    const filteredNews=useSelector((state)=>state.news.filteredNews);
     const handleClickNews=(id)=>{
         setIsDataModalOpen(true);
-      const filteredNews = allNews.filter(item=>item.id===id);
-      setCurrentNews(filteredNews);
+      const news = filteredNews.find(item=>item.id===id);
+      setCurrentNews(news);
     }
-   
   return (
     <React.Fragment>
     <div className="h-full overflow-y-auto space-y-1 ">
-    {allNews && allNews.map((item,index)=>(
-        <div className="w-full h-auto p-5 box-border bg-gray-200 cursor-pointer" onClick={()=>handleClickNews(item.id)} key={index} >
+    {filteredNews && filteredNews.map((item,index)=>(
+        <div className="w-full h-auto p-5 box-border bg-gray-100 cursor-pointer" onClick={()=>handleClickNews(item.id)} key={index} >
             <div className="flex justify-between items-center">
                 {/* sing of news */}
                 <span>{renderKnownImage(item.type)}</span>
