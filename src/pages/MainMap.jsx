@@ -3,8 +3,9 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 're
 import 'leaflet/dist/leaflet.css';
 import { setAllNews,setCurrentNews } from '../store/newsSlice';
 import { useDispatch,useSelector} from 'react-redux';
-const zoomController=({center,zoom})=>{
+const ZoomController=({center,zoom})=>{
   const map=useMap();
+  console.log(center)
   React.useEffect(()=>{
     if(zoom){
       map.flyTo(center,18,{
@@ -44,6 +45,7 @@ function MapWithMarkers(){
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
+      <ZoomController center={currentCity.path} zoom={currentCity.zoomed} />
     <Marker 
      position={center}
         eventHandlers={{
