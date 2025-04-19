@@ -1,8 +1,24 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { setAllNews,setCurrentNews } from '../store/newsSlice';
 import { useDispatch,useSelector} from 'react-redux';
+const zoomController=({center,zoom})=>{
+  const map=useMap();
+  React.useEffect(()=>{
+    if(zoom){
+      map.flyTo(center,18,{
+        duration:1,
+        easeLinearity:0.25,
+      });
+    }else{
+      map.flyTo(center,13,{
+        duration:1
+      })
+    }
+  },[center,zoom,map]);
+  return null;
+}
 function MapWithMarkers(){
     const dispatch=useDispatch();
     const currentCity=useSelector(state=>state.cities.currentCity);

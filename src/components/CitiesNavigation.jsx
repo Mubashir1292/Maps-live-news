@@ -10,6 +10,7 @@ function CitiesNavigation() {
                 lat:25.2048,
                 lng:55.2708
             },
+            zoomed:false,
         },
         {
             label:'Abu Dhabi',
@@ -17,20 +18,23 @@ function CitiesNavigation() {
                 lat:24.4539,
                 lng:54.3773
             },
+            zoomed:false,
         },
         {
             label:'Sharjah',
             path:{
                 lat:25.3562,
                 lng:55.4272
-            }
+            },
+            zoomed:false,
         },
         {
             label:'Ajman',
             path:{
                 lat:25.4052,
                 lng:55.5136
-            }
+            },
+            zoomed:false,
         },
         {
             label:'Umm Al Quwain',
@@ -38,6 +42,7 @@ function CitiesNavigation() {
                 lat:25.5508,
                 lng:55.5524
             },
+            zoomed:false,
         },
         {
             label:'Ras Al Khaimah',
@@ -45,6 +50,7 @@ function CitiesNavigation() {
                 lat:25.8007,
                 lng:55.9762,
             },
+            zoomed:false,
         },
         {
             label:'Fujairah',
@@ -52,6 +58,7 @@ function CitiesNavigation() {
                 lat:25.1221,
                 lng:56.3345
             },
+            zoomed:false,
         },
     ]
     React.useEffect(()=>{
