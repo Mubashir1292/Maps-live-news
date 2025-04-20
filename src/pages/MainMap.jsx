@@ -1,11 +1,11 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { setAllNews,setCurrentNews } from '../store/newsSlice';
+import { setCurrentNews } from '../store/newsSlice';
+import {setCurrentCity} from '../store/switchCities';
 import { useDispatch,useSelector} from 'react-redux';
 const ZoomController=({center,zoom})=>{
   const map=useMap();
-  console.log(center)
   React.useEffect(()=>{
     if(zoom){
       map.flyTo(center,18,{
@@ -39,6 +39,16 @@ React.useEffect(()=>{
   navigator.geolocation.getCurrentPosition((position)=>{
     const userLocation =[position.coords.latitude,position.coords.longitude];
     console.log(userLocation);
+    setCenter(userLocation);
+    dispatch(setCurrentCity({
+      label:'User Location',
+      path:{
+        lat:position.coords.latitude,
+        lng:position.coords.longitude
+      },
+      zoomed:true,
+    })
+    )
   })
 },[]);
     return (
