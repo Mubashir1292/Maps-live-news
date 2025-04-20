@@ -9,7 +9,6 @@ import { setFilteredNews } from './store/newsSlice';
 function App() {
   const dispatch=useDispatch();
   const currentFilter=useSelector((state)=>state.newsFilter.currentNewsFilter);
-  const filteredNews=useSelector(state=>state.news.filteredNews);
   React.useEffect(()=>{
     dispatch(setFilteredNews(currentFilter));
   },[dispatch]);

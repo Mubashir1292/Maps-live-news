@@ -1,11 +1,11 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { setAllNews,setCurrentNews } from '../store/newsSlice';
+import { setCurrentNews } from '../store/newsSlice';
+import {setCurrentCity} from '../store/switchCities';
 import { useDispatch,useSelector} from 'react-redux';
 const ZoomController=({center,zoom})=>{
   const map=useMap();
-  console.log(center)
   React.useEffect(()=>{
     if(zoom){
       map.flyTo(center,18,{
@@ -20,6 +20,7 @@ const ZoomController=({center,zoom})=>{
   },[center,zoom,map]);
   return null;
 }
+
 function MapWithMarkers(){
     const dispatch=useDispatch();
     const currentCity=useSelector(state=>state.cities.currentCity);
@@ -34,6 +35,22 @@ function MapWithMarkers(){
         setCurrentNews(filteredNews);
         dispatch(setCurrentNews(filteredNews));
     }
+    // Getting user's Location which will filter out his news and types
+    React.useEffect(()=>{
+      navigator.geolocation.getCurrentPosition((position)=>{
+        const userLocation =[position.coords.latitude,position.coords.longitude];
+        setCenter(userLocation);
+        dispatch(setCurrentCity({
+          label:'User Location',
+          path:{
+            lat:position.coords.latitude,
+            lng:position.coords.longitude
+          },
+          zoomed:true,
+        })
+        )
+      })
+    },[]);
     return (
     <MapContainer 
       center={center} 
