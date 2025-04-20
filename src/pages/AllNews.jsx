@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
-import DataModel from '../components/DataModel';
+import DataModel from '../components/Modals/DataModel';
 import  suicide from '../assets/images/suicide.svg'
 import speaker from '../assets/images/speaker.svg';
+import FavoriteNewsTypeModal from '../components/Modals/FavoriteNewsTypeModal';
 export function getTimeDifference(isoDateString) {
     const newsTime = new Date(isoDateString);
     const now = new Date();
@@ -39,9 +40,21 @@ export function renderKnownImage(newsType){
 function AllNews() {
     const [isDataModalOpen,setIsDataModalOpen]=React.useState(false);
     const [currentNews,setCurrentNews]=React.useState(null);
+    const[favouriteModal,setFavouriteModal]=React.useState(false);
+    const handleCloseFavouriteModal=()=>{
+      setFavouriteModal(false);
+    }
     const handleClose=()=>{
         setIsDataModalOpen(false);
     }
+    const handleFavoriteModalOpen=()=>{
+      setFavouriteModal(true);
+    }
+    React.useEffect(()=>{
+      setTimeout(()=>{
+        handleFavoriteModalOpen();
+      },1000);
+    },[]);
     const filteredNews=useSelector((state)=>state.news.filteredNews);
     const handleClickNews=(id)=>{
         setIsDataModalOpen(true);
@@ -66,6 +79,7 @@ function AllNews() {
     ))}
     </div>
     <DataModel show={isDataModalOpen} onClose={handleClose} currentNews={currentNews}  />
+    <FavoriteNewsTypeModal isOpen={favouriteModal} Close={handleCloseFavouriteModal} />
     </React.Fragment>
 )
 }

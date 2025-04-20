@@ -1,10 +1,9 @@
 import React from 'react';
 import { FiX } from 'react-icons/fi';
-import { getTimeDifference,renderKnownImage } from '../pages/AllNews';
+import { getTimeDifference,renderKnownImage } from '../../pages/AllNews';
 import { useDispatch } from 'react-redux';
-import {setCurrentCity} from '../store/switchCities';
+import {setCurrentCity} from '../../store/switchCities';
 function DataModel({ show, onClose, currentNews }) {
-  console.log(currentNews);
   const dispatch=useDispatch();
   React.useEffect(() => {
     const handleKeyDown= (event)=>{
@@ -53,7 +52,8 @@ function DataModel({ show, onClose, currentNews }) {
         }`}  onClick={onClose}/>
       {/* Modal Content with slide transition */}
       <div
-        className={`fixed top-2 right-0 h-[95vh] w-11/12 max-w-screen-md bg-white shadow-xl overflow-y-auto z-50 transition-transform duration-300 ease-in-out rounded ${
+        className={`fixed top-2 right-0 h-[95vh] w-11/12 max-w-screen-md bg-white 
+          shadow-xl overflow-y-auto z-50 transition-transform duration-300 ease-in-out rounded ${
           show ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

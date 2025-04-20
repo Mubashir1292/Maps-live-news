@@ -20,6 +20,7 @@ const ZoomController=({center,zoom})=>{
   },[center,zoom,map]);
   return null;
 }
+
 function MapWithMarkers(){
     const dispatch=useDispatch();
     const currentCity=useSelector(state=>state.cities.currentCity);
@@ -35,22 +36,21 @@ function MapWithMarkers(){
         dispatch(setCurrentNews(filteredNews));
     }
     // Getting user's Location which will filter out his news and types
-React.useEffect(()=>{
-  navigator.geolocation.getCurrentPosition((position)=>{
-    const userLocation =[position.coords.latitude,position.coords.longitude];
-    console.log(userLocation);
-    setCenter(userLocation);
-    dispatch(setCurrentCity({
-      label:'User Location',
-      path:{
-        lat:position.coords.latitude,
-        lng:position.coords.longitude
-      },
-      zoomed:true,
-    })
-    )
-  })
-},[]);
+    React.useEffect(()=>{
+      navigator.geolocation.getCurrentPosition((position)=>{
+        const userLocation =[position.coords.latitude,position.coords.longitude];
+        setCenter(userLocation);
+        dispatch(setCurrentCity({
+          label:'User Location',
+          path:{
+            lat:position.coords.latitude,
+            lng:position.coords.longitude
+          },
+          zoomed:true,
+        })
+        )
+      })
+    },[]);
     return (
     <MapContainer 
       center={center} 
