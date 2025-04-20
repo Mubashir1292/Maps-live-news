@@ -34,6 +34,13 @@ function MapWithMarkers(){
         setCurrentNews(filteredNews);
         dispatch(setCurrentNews(filteredNews));
     }
+    // Getting user's Location which will filter out his news and types
+React.useEffect(()=>{
+  navigator.geolocation.getCurrentPosition((position)=>{
+    const userLocation =[position.coords.latitude,position.coords.longitude];
+    console.log(userLocation);
+  })
+},[]);
     return (
     <MapContainer 
       center={center} 
