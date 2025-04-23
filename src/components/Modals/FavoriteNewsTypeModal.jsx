@@ -1,72 +1,78 @@
 import React from 'react';
 import { FiX } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import { getTimeDifference, renderKnownImage } from '../../pages/AllNews';
 const FavoriteNewsTypeModal = ({ isOpen, Close }) => {
     //! State Management
-    const[currentText,setCurrentText]=React.useState();
-    const[loading,setLoading]=React.useState(false);
-    const[isFirstVisit,setIsFirstVisit]=React.useState(true);
-    const newsFilters=useSelector(state=>state.newsFilter.newsFilters);
-    const allNews=useSelector(state=>state.news.allNews);
-    const[selectedFavCategories,setSelectedFavCategories]=React.useState([]);
-    const[userFavNews,setUserFavNews]=React.useState([]);
+    const [currentText, setCurrentText] = React.useState();
+    const [loading, setLoading] = React.useState(false);
+    const [isFirstVisit, setIsFirstVisit] = React.useState(true);
+    const newsFilters = useSelector(state => state.newsFilter.newsFilters);
+    const allNews = useSelector(state => state.news.allNews);
+    const [selectedFavCategories, setSelectedFavCategories] = React.useState([]);
+    const [userFavNews, setUserFavNews] = React.useState([]);
     //! Just the headings
     const initialText = 'AI is generating personalized news recommendations Types for you...';
     const [finalText, setFinalText] = React.useState('Please Choose your favorite news type from the list below:');
     // ? Starting of the Application
-    React.useEffect(()=>{
-        if(!isOpen) return;
+    React.useEffect(() => {
+        if (!isOpen) return;
         setLoading(true);
         setCurrentText(initialText);
-        const checkForFavCategories=setTimeout(()=>{
+        const checkForFavCategories = setTimeout(() => {
             setLoading(false);
             setCurrentText(finalText)
-        },4000);
-        return ()=> clearTimeout(checkForFavCategories);
-    },[isOpen,finalText]);
+        }, 4000);
+        return () => clearTimeout(checkForFavCategories);
+    }, [isOpen, finalText]);
     //* function of handleClose
-    const handleClose=()=>{
+    const handleClose = () => {
         Close();
     }
     //* function of Already Checking
-    const handleCategoryAlreadyExists=(type)=>{
-        return selectedFavCategories.find((item)=>item.id===type.id);
+    const handleCategoryAlreadyExists = (type) => {
+        return selectedFavCategories.find((item) => item.id === type.id);
     }
     // * function of Adding Category to favorites
-    const handleCategoryClick=(categoryType)=>{
-        setSelectedFavCategories((prev)=>{
-           if(prev.some((item)=>item.id===categoryType.id)){
-                return prev.filter(item=>item.id!==categoryType.id);
-           }else{
-            return [...prev,categoryType];
-           }
-        })}
+    const handleCategoryClick = (categoryType) => {
+        setSelectedFavCategories((prev) => {
+            if (prev.some((item) => item.id === categoryType.id)) {
+                return prev.filter(item => item.id !== categoryType.id);
+            } else {
+                return [...prev, categoryType];
+            }
+        })
+    }
     // * function of saving the preferences 
-    const handleSavePreference=()=>{
-        localStorage.setItem("userPreferences",JSON.stringify(selectedFavCategories));
+    const handleSavePreference = () => {
+        localStorage.setItem("userPreferences", JSON.stringify(selectedFavCategories));
         setIsFirstVisit(false);
         fetchSavePreferences();
     }
     // * function to check if the localStorage has already the values
-    const fetchSavePreferences=()=>{
-        const savedPreferences=JSON.parse(localStorage.getItem("userPreferences"));
-        if(savedPreferences!==null){
+    const fetchSavePreferences = () => {
+        const savedPreferences = JSON.parse(localStorage.getItem("userPreferences"));
+        if (savedPreferences !== null) {
             setSelectedFavCategories(savedPreferences);
             setIsFirstVisit(false);
             gettingAllNewsBack(savedPreferences);
         }
     }
-    React.useEffect(()=>{
+    React.useEffect(() => {
         fetchSavePreferences();
-    },[isFirstVisit]);
+    }, [isFirstVisit]);
     // * Creating this function for returning back the elements
-    const gettingAllNewsBack=(savedPreferences)=>{
-        const favIds=savedPreferences.length >0  && savedPreferences.map(item=>item.value);
-        const favNews = allNews.filter((item)=>favIds.includes(item.type));
-        if(favNews!==null){
+    const gettingAllNewsBack = (savedPreferences) => {
+        const favIds = savedPreferences.length > 0 && savedPreferences.map(item => item.value);
+        const favNews = allNews.filter((item) => favIds.includes(item.type));
+        if (favNews !== null) {
             setUserFavNews(favNews);
-            console.log(favNews);
+            setFinalText("Here's Your Favorite News Feed");
         }
+    }
+    // * handling the news click
+    const handleClickNews=(newsId)=>{
+        console.log(newsId);
     }
     return (
         <React.Fragment>
@@ -105,9 +111,23 @@ const FavoriteNewsTypeModal = ({ isOpen, Close }) => {
                                         <button className="text-center px-10 py-3 border bg-gray-800 hover:bg-gray-900 hover:opacity-100 text-white rounded-md" onClick={handleSavePreference}>Save</button>
                                     </React.Fragment>
                                 ) : (
-                                    <React.Fragment>
-
-                                    </React.Fragment>)}
+                                    <div className="h-full flex flex-col items-center overflow-y-auto space-y-1">
+                                        {userFavNews && userFavNews.map((item, index) => (
+                                            <div className="w-7/12 h-auto flex flex-col justify-center  py-2 px-5 box-border bg-gray-100 cursor-pointer"  key={index} >
+                                                <div className="flex justify-between items-center">
+                                                    {/* sing of news */}
+                                                    <span>{renderKnownImage(item.type)}</span>
+                                                    {/* date and Time*/}
+                                                    <span className="text-sm">{getTimeDifference(item.date)}</span>
+                                                    <button className="bg-[#954535] text-center p-2 text-white text-[10px] rounded-lg w-2/12">See More</button>
+                                                </div>
+                                                <p className="m-2 text-[10px]">{item.description}</p>
+                                                <img className="rounded w-5/12 self-center" src={item.imageSource} alt={item.title} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
+                                }
                             </React.Fragment>
                         }
                     </div>
