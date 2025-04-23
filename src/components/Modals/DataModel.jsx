@@ -96,7 +96,7 @@ function DataModel({ show, onClose, currentNews }) {
                     <h2 className="font-bold">{currentNews.city}</h2>
                     <div className="flex justify-start items-center space-x-1 mt-2">
                         {currentNews.tags.map((item,index)=>(
-                            <span key={index} className="bg-[#ddc4be] w-2/12 p-2 text-center text-black font-bold rounded-lg">#{item}</span>
+                            <span key={index} className="bg-[#ddc4be] w-3/12 p-2 text-center text-black font-bold rounded-lg">#{item}</span>
                         ))}
                     </div>
                 </div>
