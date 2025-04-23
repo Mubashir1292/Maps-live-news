@@ -7,7 +7,9 @@ const FavoriteNewsTypeModal = ({ isOpen, Close }) => {
     const[loading,setLoading]=React.useState(false);
     const[isFirstVisit,setIsFirstVisit]=React.useState(true);
     const newsFilters=useSelector(state=>state.newsFilter.newsFilters);
+    const allNews=useSelector(state=>state.news.allNews);
     const[selectedFavCategories,setSelectedFavCategories]=React.useState([]);
+    const[userFavNews,setUserFavNews]=React.useState([]);
     //! Just the headings
     const initialText = 'AI is generating personalized news recommendations Types for you...';
     const [finalText, setFinalText] = React.useState('Please Choose your favorite news type from the list below:');
@@ -47,16 +49,25 @@ const FavoriteNewsTypeModal = ({ isOpen, Close }) => {
     }
     // * function to check if the localStorage has already the values
     const fetchSavePreferences=()=>{
-        const savedPreferences=localStorage.getItem("userPreferences");
+        const savedPreferences=JSON.parse(localStorage.getItem("userPreferences"));
         if(savedPreferences!==null){
+            setSelectedFavCategories(savedPreferences);
             setIsFirstVisit(false);
+            gettingAllNewsBack(savedPreferences);
         }
-        console.log(JSON.parse(savedPreferences));
     }
     React.useEffect(()=>{
         fetchSavePreferences();
     },[isFirstVisit]);
-
+    // * Creating this function for returning back the elements
+    const gettingAllNewsBack=(savedPreferences)=>{
+        const favIds=savedPreferences.length >0  && savedPreferences.map(item=>item.value);
+        const favNews = allNews.filter((item)=>favIds.includes(item.type));
+        if(favNews!==null){
+            setUserFavNews(favNews);
+            console.log(favNews);
+        }
+    }
     return (
         <React.Fragment>
             <div className={`fixed inset-0 bg-black transition-opacity z-10 duration-500 ${isOpen ? "bg-opacity-90 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
