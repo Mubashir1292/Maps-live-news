@@ -75,7 +75,7 @@ function Header() {
                   value={searchCity}
                   onChange={handleSearchCityNameChange}
                 />
-                <button type="submit">
+                <button type="submit" className="flex justify-center items-center">
                   <RiSearch2Fill className="absolute right-2 text-[#954535] hidden md:block" />
                 </button>
                 
@@ -105,7 +105,6 @@ function Header() {
                 </div>
               </div>
             </form>
-            
             <button 
               className="p-2 focus:outline-none flex sm:hidden" 
               onClick={() => setIsShowMenu(!isShowMenu)} 
@@ -121,7 +120,7 @@ function Header() {
                       ${isShowMenu ? "max-h-40 opacity-100 mt-4" : "max-h-0 opacity-0"}
             `}
         >
-          <form className="w-5/12 flex flex-col bg-gray-200 p-4 sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <form className="w-full flex flex-col bg-gray-200 p-4 sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="w-full relative">
               <input
                 type="text"

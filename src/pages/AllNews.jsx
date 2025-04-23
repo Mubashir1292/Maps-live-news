@@ -41,8 +41,6 @@ const handleOpenSource = (url) => {
   window.open(url, "_blank", "noopener,noreferrer")
 }
 function AllNews() {
-  const allNews = useSelector((state) => state.news.allNews);
-  console.log(allNews);
   const [loading, setLoading] = React.useState(false);
   const [isDataModalOpen, setIsDataModalOpen] = React.useState(false);
   const [currentNews, setCurrentNews] = React.useState(null);
@@ -66,7 +64,7 @@ function AllNews() {
   React.useEffect(() => {
     setTimeout(() => {
       handleFavoriteModalOpen();
-    }, 1000);
+    }, 15000);
   }, []);
   const filteredNews = useSelector((state) => state.news.filteredNews);
   const handleClickNews = (newsItem) => {
@@ -87,7 +85,7 @@ function AllNews() {
                   {/* sing of news */}
                   <span>{renderKnownImage(item.type)}</span>
                   {/* date and Time*/}
-                  <span>{getTimeDifference(item.publishedAt)}</span>
+                  <span className="text-[8px] sm:text-lg">{getTimeDifference(item.date)}</span>
                   <button className="bg-[#954535] text-center p-2 text-white text-[12px] rounded-lg w-5/12" onClick={(e) => {
                     e.stopPropagation();
                     handleOpenSource(item.sourceUrl)
