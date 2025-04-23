@@ -55,7 +55,7 @@ function MapWithMarkers(){
     <MapContainer 
       center={center} 
       zoom={13} 
-      style={{width:'100%',height:'100%',position:'relative',zIndex: 10,}}
+      style={{width:'100%',height:'100%',position:'relative',zIndex:10}}
       key={JSON.stringify(center)}
     >
       <TileLayer

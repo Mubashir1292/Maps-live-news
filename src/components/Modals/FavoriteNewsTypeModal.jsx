@@ -22,7 +22,7 @@ const FavoriteNewsTypeModal = ({ isOpen, Close }) => {
         const checkForFavCategories = setTimeout(() => {
             setLoading(false);
             setCurrentText(finalText)
-        }, 4000);
+        }, 15000);
         return () => clearTimeout(checkForFavCategories);
     }, [isOpen, finalText]);
     //* function of handleClose
