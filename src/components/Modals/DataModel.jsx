@@ -77,7 +77,7 @@ function DataModel({ show, onClose, currentNews }) {
               <div className="flex items-center justify-center space-x-2 mb-4">
                 <span className="text-sm text-gray-900 text-center">
                   {currentNews.description}
-                </span>
+                </span> 
               </div>
               
               {/* Image Section */}
